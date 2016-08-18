@@ -1,0 +1,62 @@
+Description of files necessary to reproduce results in Beaudrot, Acevedo, Lessard et al. 
+
+
+ECOLOGICAL SIMILARITY INDEX requires
+
+A.) Data files
+1. species_list.csv
+2. mammal_com.csv
+3. SitesBinary.RData
+4. mammal_traits.csv
+5. mammal_trait_matrix.csv (written from creating phyllo and fun mat.R)
+6. mammST_MSW05_all.tre
+7. FritzTree.rs200k.100trees.tre
+8. global_tip_labels_mod.csv
+9. mean_phylomat2.csv (written from creating phyllo and fun mat.R)
+
+B.) R files
+1. creating phylo and fun mat_final.R
+2. Funphylocom.R
+3. FPDist_code_v6.R
+
+Description: 
+
+The file 'creating phylo and fun mat.R' provides the code to make a phylogenetic distance matrix and a trait distance matrix. These matrices are then combined using functions from Funphylocom.R (Cadotte et al. 2013) in the file FPDist_code_v6.R. FPDist_code_v6.R then goes on to calculate the index for each species relative to the mammal community observed at each camera trap.
+
+The file species_list.csv contains a vector of the names of all mammal species observed at the 7 TEAM sites.
+
+The file mammal_com.csv contains a dataframe with species as rows and camera traps as columns. The dataframe is populated with 0/1 data indicating if a species has not/has been detected at a camera trap.
+
+The file SitesBinary.Rdata contains a list with a length of 7. There is one element in the list for each of the TEAM sites examined in this study. Each site has a matrix with species as columns and camera traps as rows. The dataframe is populated with 0/1 data indicating if a species has not/has been detected at a camera trap.
+
+The file mammal.traits.csv contains trait data for each species to be used in the functional distance matrix. The file mammal_trait_matrix.cv contains the matrix.
+
+The file mammST_MSW05_all.tre contains a phylogenetic tree for mammals and the file Global_tip_labels_mod.csv contains tip names for the phylogenetic tree. 
+
+The file mean_phylomat2.csv contains the phylogenetic matrix to be combined with the functional trait matrix in the ecological similarity index.
+
+
+DYNAMIC OCCUPANCY MODELING requires
+
+A.) Formatted Rdata files 
+1. Species7sites_Include.RData
+2. All_covs.RData
+3. BIOTIC_Include.RData (produced from code for ecological similarity index, see above)
+
+B.) R files
+1. Unmarked_Colext_Analysis_ElevationOnly.R (Model Set 1: Elevation)
+2. Unmarked_Colext_Analysis_SimpleOnly.R (Model Set 2: ABIOTIC & BIOTIC)
+  
+Description: 
+
+Unmarked_Colext_Analysis_ElevationOnly.R contains code to run a set of 4 dynamic occupancy models with elevation as a covariate of local colonization and/or extinction (i.e., Model Set 1: Elevation). The coefficients from these models correspond with Figure 2 in the main text illustrating range shifts. 
+
+Unmarked_Colext_Analysis_SimpleOnly.R contains code to run a set of 37 dynamic occupancy models with temperature (Tmin, Tmax, Tmean, Tsd, Tvar) and/or the ecological similarity index (Biotic) as covariates of local colonization and/or extinction (i.e., Model Set 2: Abiotic & Biotic).
+
+Both of these R files require pre-formatted data to be loaded for each of the species to be modeled (Species7sites_Include.RData) and for the covariates, which are contained in two separate files. All_covs.RData contains Elevation, Temperature and Forest Cover covariates. BIOTIC_Include.RData contains the Biotic variable.
+
+Species7sites_Include.RData is a list with a length of 62. There is one element in the list for each of the 62 species examined in this study. Each element contains a dataframe populated with 1/0/NA, which corresponds to detection/non-detection/not visited for the species at each camera trap (row) and sampling visit (column). 
+
+All_covs.RData is a list with a length of 7. There is one element in the list for each of the TEAM sites examined in this study. Each site therein contains a list with a length of 8: Elevation, ForestLossCT, ForestGainCT, Tmin, Tmax, Tvar, Tsd, Tmean. The first three variables (Elevation, ForestLossCT, ForestGainCT) have vectors of values for each camera trap. The remaining five variables (Tmin, Tmax, Tvar, Tsd, Tmean) have matrices of values for each camera trap (row) and primary sampling period (i.e., year) (column).
+
+BIOTIC_Include.RData is a list with a length of 62. There is one element in the list for each of the 62 species examined in this study. Each element contains a vector of ecological similarity values for the focal species relative to the mammal community observed at each camera trap.
